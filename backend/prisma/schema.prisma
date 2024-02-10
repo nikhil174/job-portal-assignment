@@ -29,10 +29,9 @@ model Job {
   description  String
   organization String
   stack        String[]
-  postedBy     User     @relation("PostedJobs", fields: [userId], references: [id])
+  postedBy     User     @relation("PostedJobs", fields: [postedById], references: [id])
   postedById   Int
   appliedBy    User[]   @relation("AppliedJobs")
-  userId       Int
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

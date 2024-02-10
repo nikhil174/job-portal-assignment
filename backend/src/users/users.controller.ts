@@ -4,7 +4,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -33,10 +32,5 @@ export class UsersController {
     @Body() updateUserDto: Prisma.UserUpdateInput,
   ) {
     return this.usersService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
   }
 }

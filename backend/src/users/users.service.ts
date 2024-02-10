@@ -6,12 +6,6 @@ import { DatabaseService } from 'src/database/database.service';
 export class UsersService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createUserDto: Prisma.UserCreateInput) {
-    return this.databaseService.user.create({
-      data: createUserDto,
-    });
-  }
-
   async findOne(id: number) {
     return this.databaseService.user.findUnique({
       where: {
@@ -26,14 +20,6 @@ export class UsersService {
         id,
       },
       data: updateUserDto,
-    });
-  }
-
-  async remove(id: number) {
-    return this.databaseService.user.delete({
-      where: {
-        id,
-      },
     });
   }
 }
