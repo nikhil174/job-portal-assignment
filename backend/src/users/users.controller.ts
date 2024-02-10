@@ -1,22 +1,25 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
+import { JwtGuard } from 'src/auth/guard';
+import { GetUser } from 'src/auth/decorator/get-user.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: Prisma.UserCreateInput) {
-    return this.usersService.create(createUserDto);
+  @UseGuards(JwtGuard)
+  @Get('me')
+  getMe(@GetUser() user: User) {
+    return user;
   }
 
   @Get(':id')
