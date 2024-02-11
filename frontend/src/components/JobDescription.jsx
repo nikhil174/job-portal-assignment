@@ -5,16 +5,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { addAppliedJob } from '../store/userReducer';
+import { convertToIST } from '../utils/helpers';
 
 function JobDescription({ job }) {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.user.accessToken);
   const appliedJobs = useSelector((state) => state.user.appliedJobs);
-  console.log(appliedJobs);
+  const role = useSelector((state) => state.user.role);
   const applied = appliedJobs.length && job ? appliedJobs.includes(job.id) : false;
 
   const handleApply = useMemo(() => {
     return async (id) => {
+      if (!accessToken) {
+        toast.error('You must be logged in');
+        return;
+      } else if (role !== 'CANDIDATE') {
+        toast.error('Only candidates can apply');
+        return;
+      } 
+
       try {
         await axios.post(`http://localhost:5000/jobs/${id}/apply`, {}, {
           headers: {
@@ -45,7 +54,7 @@ function JobDescription({ job }) {
                 <p id="job-org">{job.organization}</p>
               </div>
               <div>
-                <p>Posted on : {job.createdAt}</p>
+                <p>Posted on : {convertToIST(job.createdAt)}</p>
               </div>
             </div>
             <div className="recruiter">
@@ -70,7 +79,7 @@ function JobDescription({ job }) {
             <h2>Description</h2>
             <div className="des-stack">
               {job.stack.map(item => (
-                <div className='stack-item'>{item}</div>
+                <div key={item} className='stack-item'>{item}</div>
               ))}
             </div>
             <div className="des-description">
