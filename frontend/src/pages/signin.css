@@ -68,3 +68,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.signup_link {
+    text-align: center;
+}

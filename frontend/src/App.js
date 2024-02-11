@@ -7,6 +7,7 @@ import './App.css';
 import SignIn from './pages/Signin';
 import MainSection from './pages/MainSection';
 import Signup from './pages/Signup';
+import PostJob from './pages/PostJob';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<MainSection />} />
+          <Route path="/jobs/create" element={<PostJob />} />
         </Routes>
       </div>
     </Router>

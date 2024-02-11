@@ -27,3 +27,7 @@
 .header_auth button:hover {
     background-color: #0056b3;
 }
+
+.postJob {
+    margin-right: 20px;
+}
