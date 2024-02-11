@@ -1,0 +1,13 @@
+.signin_container {
+    width: 30%;
+    padding: 20px 50px 20px 50px;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#title {
+    padding-bottom: 10px;
+    text-align: center;
+}

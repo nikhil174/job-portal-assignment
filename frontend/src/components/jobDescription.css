@@ -1,0 +1,78 @@
+.job-description {
+    display: flex;
+    width: 100%;
+}
+
+.empty-container {
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+}
+
+.job-container {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.job-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 20vh;
+
+}
+
+#job-title {
+    font-size: 36px;
+}
+
+#job-org {
+    font-size: 24px;
+}
+
+.job-about {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+
+.des-stack {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.stack-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 3px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.recruiter {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+#applybtn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#applybtn:hover {
+    background-color: #0056b3;
+}
