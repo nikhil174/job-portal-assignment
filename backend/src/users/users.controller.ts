@@ -21,6 +21,13 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(JwtGuard)
+  @Get('aboutme')
+  aboutMe(@GetUser() user: User) {
+    console.log('aboutMe');
+    return this.usersService.aboutMe(user);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);

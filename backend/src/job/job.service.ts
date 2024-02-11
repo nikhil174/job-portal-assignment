@@ -114,7 +114,19 @@ export class JobsService {
       where['postedBy'] = { name: { contains: name, mode: 'insensitive' } };
     }
 
-    return this.databaseService.job.findMany({ where });
+    const jobs = await this.databaseService.job.findMany({
+      where,
+      include: {
+        postedBy: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    return jobs;
   }
 
   async getCandidatesForRecruiter(user: User): Promise<User[]> {
