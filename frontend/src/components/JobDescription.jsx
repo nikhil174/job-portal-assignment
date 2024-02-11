@@ -1,142 +1,84 @@
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import './jobDescription.css'
+import { useDispatch, useSelector } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { addAppliedJob } from '../store/userReducer';
 
-function JobDescription({ selectedJob }) {
-  console.log(selectedJob);
-  const [jobs, setJobs] = useState(
-    [
-      {
-        "id": 4,
-        "title": "SDE1",
-        "description": "frontend developer",
-        "organization": "Test Org 1",
-        "stack": [
-          "reactjs",
-          "nextjs"
-        ],
-        "postedById": 6,
-        "createdAt": "2024-02-11T07:25:57.879Z",
-        "updatedAt": "2024-02-11T07:25:57.879Z",
-        "postedBy": {
-          "email": "amansingh@gmail.com",
-          "name": "Aman Singh"
-        }
-      },
-      {
-        "id": 5,
-        "title": "HR Manager",
-        "description": "HR manager",
-        "organization": "Test Org 1",
-        "stack": [
-          "Communiction"
-        ],
-        "postedById": 6,
-        "createdAt": "2024-02-11T07:27:22.666Z",
-        "updatedAt": "2024-02-11T07:27:22.666Z",
-        "postedBy": {
-          "email": "amansingh@gmail.com",
-          "name": "Aman Singh"
-        }
-      },
-      {
-        "id": 6,
-        "title": "SDE2",
-        "description": "Backend Engineer",
-        "organization": "Test Org 1",
-        "stack": [
-          "nodejs",
-          "mongodb"
-        ],
-        "postedById": 6,
-        "createdAt": "2024-02-11T07:28:08.043Z",
-        "updatedAt": "2024-02-11T07:28:08.043Z",
-        "postedBy": {
-          "email": "amansingh@gmail.com",
-          "name": "Aman Singh"
-        }
-      },
-      {
-        "id": 7,
-        "title": "SDE1",
-        "description": "Frontend Developer",
-        "organization": "Test Org 2",
-        "stack": [
-          "reactjs",
-          "Javascript"
-        ],
-        "postedById": 7,
-        "createdAt": "2024-02-11T07:30:44.786Z",
-        "updatedAt": "2024-02-11T07:30:44.786Z",
-        "postedBy": {
-          "email": "priya@gmail.com",
-          "name": "Priya Keshari"
-        }
-      },
-      {
-        "id": 8,
-        "title": "SDE2",
-        "description": "Frontend Developer",
-        "organization": "Test Org 2",
-        "stack": [
-          "reactjs",
-          "Javascript",
-          "nextjs",
-          "sytem design"
-        ],
-        "postedById": 7,
-        "createdAt": "2024-02-11T07:31:28.385Z",
-        "updatedAt": "2024-02-11T07:31:28.385Z",
-        "postedBy": {
-          "email": "priya@gmail.com",
-          "name": "Priya Keshari"
-        }
+function JobDescription({ job }) {
+  const dispatch = useDispatch();
+  const accessToken = useSelector((state) => state.user.accessToken);
+  const appliedJobs = useSelector((state) => state.user.appliedJobs);
+  console.log(appliedJobs);
+  const applied = appliedJobs.length && job ? appliedJobs.includes(job.id) : false;
+
+  const handleApply = useMemo(() => {
+    return async (id) => {
+      try {
+        await axios.post(`http://localhost:5000/jobs/${id}/apply`, {}, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+        dispatch(addAppliedJob(id));
+        toast.success('Applied to Job successfully');
+      } catch (error) {
+        toast.error('Failed to apply to job');
+        console.log(error);
       }
-    ]
-  );
-
-  const data = jobs.find(job => job.id == selectedJob)
+    }
+  }, []);
 
   return (
     <div className='job-description'>
-      {/* {!selectedJob && (
+      {!job ? (
         <div className="empty-container">
           Select a Job to Display
         </div>
-      )} */}
-      <div className="job-container">
-        <div className='job-header'>
-          <div className="job-about">
-            <div>
-              <p id="job-title">{data.title}</p>
-              <p id="job-org">{data.organization}</p>
+      ) : (
+        <div className="job-container">
+          <div className='job-header'>
+            <div className="job-about">
+              <div>
+                <p id="job-title">{job.title}</p>
+                <p id="job-org">{job.organization}</p>
+              </div>
+              <div>
+                <p>Posted on : {job.createdAt}</p>
+              </div>
             </div>
-            <div>
-              <p>Posted on : {data.createdAt}</p>
+            <div className="recruiter">
+              <div>
+                <p>Recuiter</p>
+                <p>{job.postedBy.name}</p>
+                <p>{job.postedBy.email}</p>
+              </div>
+              <div className='applybtn_container'>
+                <button
+                  id="applybtn"
+                  className={applied ? "disabledbtn" : ""}
+                  disabled={applied}
+                  onClick={() => handleApply(job.id)}
+                >
+                  {applied ? "Applied" : "Apply"}
+                </button>
+              </div>
             </div>
           </div>
-          <div className="recruiter">
-            <div>
-              <p>Recuiter</p>
-              <p>{data.postedBy.name}</p>
-              <p>{data.postedBy.email}</p>
+          <div className="description-section">
+            <h2>Description</h2>
+            <div className="des-stack">
+              {job.stack.map(item => (
+                <div className='stack-item'>{item}</div>
+              ))}
             </div>
-            <div className='applybtn_container'>
-              <button id="applybtn">Apply</button>
+            <div className="des-description">
+              {job.description}
             </div>
           </div>
         </div>
-        <div className="description-section">
-          <h2>Description</h2>
-          <div className="des-stack">
-            {data.stack.map(item => (
-              <div className='stack-item'>{item}</div>
-            ))}
-          </div>
-          <div className="des-description">
-            {data.description}
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

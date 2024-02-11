@@ -3,10 +3,15 @@ import JobDescription from '../components/JobDescription';
 import JobList from '../components/JobList';
 import './mainSection.css';
 import axios from 'axios';
+import Header from '../components/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../store/userReducer';
 
 const MainSection = () => {
-    const [selectedJob, setSelectedJob] = useState(6);
+    const accessToken = useSelector((state) => state.user.accessToken);
+    const dispatch = useDispatch();
     const [jobs, setJobs] = useState([]);
+    const [selectedJobDetail, setSelectedJobDetail] = useState(null);
 
     useEffect(() => {
         // Fetch jobs data from an API
@@ -21,10 +26,31 @@ const MainSection = () => {
             }
         }
         fetchData();
+        if (!accessToken) {
+            const accessToken = localStorage.getItem('jobify_token');
+            if (accessToken) {
+                const fetchUserData = async () => {
+                    try {
+                        const response = await axios.get('http://localhost:5000/users/aboutme', {
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`
+                            }
+                        });
+                        const { name, role, appliedJobs, postedJobs } = response.data;
+                        // Dispatch action to store access token in Redux
+                        dispatch(login({ accessToken, name, role, appliedJobs, postedJobs }));
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+                fetchUserData();
+            }
+        }
     }, []);
 
     const handleJobSelect = jobId => {
-        setSelectedJob(jobId);
+        const job = jobs.find(j => j.id === jobId);
+        setSelectedJobDetail(job);
     };
 
     const handleJobSearch = useCallback(async (key, value) => {
@@ -45,10 +71,13 @@ const MainSection = () => {
     }, []);
 
     return (
+        <>
+        <Header />
         <div className="jobs_container">
             <JobList jobs={jobs} handleJobSelect={handleJobSelect} handleSearch={handleJobSearch} />
-            <JobDescription selectedJob={selectedJob} handleJobSelect={handleJobSelect} />
+            <JobDescription job={selectedJobDetail} handleJobSelect={handleJobSelect} />
         </div>
+        </>
     );
 };
 

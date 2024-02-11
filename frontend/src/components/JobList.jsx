@@ -24,7 +24,7 @@ const JobList = ({ jobs, handleJobSelect, handleSearch }) => {
       <div className='search-container'>
         <select value={searchCriteria} onChange={handleSearchCriteriaChange}>
           <option value='title'>Title</option>
-          <option value='recruiter'>Recruiter Name</option>
+          <option value='name'>Recruiter Name</option>
           <option value='description'>Description</option>
         </select>
         <input

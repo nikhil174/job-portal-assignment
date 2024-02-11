@@ -19,7 +19,8 @@
 .search-container input {
     flex: 0.8;
     font-size: 16px;
-    height: 30px;
+    height: 40px;
+    padding: 5px;
 }
 .search-container select {
     width: 50px;

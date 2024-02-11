@@ -1,20 +1,25 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 import SignIn from './pages/Signin';
 import MainSection from './pages/MainSection';
-import Header from './components/Header';
+import Signup from './pages/Signup';
 
 const App = () => {
   return (
-    <div className='App'>
-      <ToastContainer />
-      <Header />
-      {/* <SignIn /> */}
-      <MainSection />
-    </div>
+    <Router>
+        <ToastContainer />
+      <div className='App'>
+        <Routes>
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<MainSection />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
