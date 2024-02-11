@@ -17,6 +17,7 @@ model User {
   email       String   @unique
   password    String
   role        Role
+  about       String
   postedJobs  Job[]    @relation("PostedJobs")
   appliedJobs Job[]    @relation("AppliedJobs")
   createdAt   DateTime @default(now())

@@ -23,6 +23,7 @@ export class AuthService {
           password: hash,
           role: dto.role,
           name: dto.name,
+          about: dto.about,
         },
       });
       const token = await this.signToken(user.id, user.email);
