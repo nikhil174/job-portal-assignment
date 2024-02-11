@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import JobCard from './JobCard';
 import './jobList.css';
 
-const JobList = ({ jobs, handleJobSelect }) => {
+const JobList = ({ jobs, handleJobSelect, handleSearch }) => {
   const [searchCriteria, setSearchCriteria] = useState('title');
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -14,6 +14,10 @@ const JobList = ({ jobs, handleJobSelect }) => {
   const handleSearchKeywordChange = e => {
     setSearchKeyword(e.target.value);
   };
+
+  const onSearch = () => {
+    handleSearch(searchCriteria, searchKeyword);
+  }
 
   return (
     <div className='job-list-container'>
@@ -29,21 +33,32 @@ const JobList = ({ jobs, handleJobSelect }) => {
           onChange={handleSearchKeywordChange}
           placeholder='Search...'
         />
-        <button>Search</button>
+        <button
+          id="searchBtn"
+          onClick={onSearch}
+        >
+          <span className="material-symbols-outlined" id="searchIcon">
+            search
+          </span>
+        </button>
       </div>
       <div className='job-list'>
-        {jobs.map(job => (
-          <JobCard
-            id={job.id}
-            key={job.id}
-            title={job.title}
-            description={job.description}
-            org={job.organization}
-            stack={job.stack}
-            postedOn={job.createdAt}
-            handleJobSelect={handleJobSelect}
-          />
-        ))}
+        {jobs.length === 0 ? (
+          <div id="not_found_jobs">No Jobs Found</div>
+        ) : (
+          jobs.map(job => (
+            <JobCard
+              id={job.id}
+              key={job.id}
+              title={job.title}
+              description={job.description}
+              org={job.organization}
+              stack={job.stack}
+              postedOn={job.createdAt}
+              handleJobSelect={handleJobSelect}
+            />
+          ))
+        )}
       </div>
     </div>
   );

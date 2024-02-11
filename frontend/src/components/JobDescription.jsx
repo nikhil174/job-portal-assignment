@@ -16,7 +16,11 @@ function JobDescription({ selectedJob }) {
         ],
         "postedById": 6,
         "createdAt": "2024-02-11T07:25:57.879Z",
-        "updatedAt": "2024-02-11T07:25:57.879Z"
+        "updatedAt": "2024-02-11T07:25:57.879Z",
+        "postedBy": {
+          "email": "amansingh@gmail.com",
+          "name": "Aman Singh"
+        }
       },
       {
         "id": 5,
@@ -28,7 +32,11 @@ function JobDescription({ selectedJob }) {
         ],
         "postedById": 6,
         "createdAt": "2024-02-11T07:27:22.666Z",
-        "updatedAt": "2024-02-11T07:27:22.666Z"
+        "updatedAt": "2024-02-11T07:27:22.666Z",
+        "postedBy": {
+          "email": "amansingh@gmail.com",
+          "name": "Aman Singh"
+        }
       },
       {
         "id": 6,
@@ -41,7 +49,11 @@ function JobDescription({ selectedJob }) {
         ],
         "postedById": 6,
         "createdAt": "2024-02-11T07:28:08.043Z",
-        "updatedAt": "2024-02-11T07:28:08.043Z"
+        "updatedAt": "2024-02-11T07:28:08.043Z",
+        "postedBy": {
+          "email": "amansingh@gmail.com",
+          "name": "Aman Singh"
+        }
       },
       {
         "id": 7,
@@ -54,7 +66,11 @@ function JobDescription({ selectedJob }) {
         ],
         "postedById": 7,
         "createdAt": "2024-02-11T07:30:44.786Z",
-        "updatedAt": "2024-02-11T07:30:44.786Z"
+        "updatedAt": "2024-02-11T07:30:44.786Z",
+        "postedBy": {
+          "email": "priya@gmail.com",
+          "name": "Priya Keshari"
+        }
       },
       {
         "id": 8,
@@ -70,7 +86,11 @@ function JobDescription({ selectedJob }) {
         "postedById": 7,
         "createdAt": "2024-02-11T07:31:28.385Z",
         "updatedAt": "2024-02-11T07:31:28.385Z",
-      },
+        "postedBy": {
+          "email": "priya@gmail.com",
+          "name": "Priya Keshari"
+        }
+      }
     ]
   );
 
@@ -97,8 +117,10 @@ function JobDescription({ selectedJob }) {
           <div className="recruiter">
             <div>
               <p>Recuiter</p>
+              <p>{data.postedBy.name}</p>
+              <p>{data.postedBy.email}</p>
             </div>
-            <div>
+            <div className='applybtn_container'>
               <button id="applybtn">Apply</button>
             </div>
           </div>

@@ -76,3 +76,8 @@
 #applybtn:hover {
     background-color: #0056b3;
 }
+
+.applybtn_container {
+    align-self: flex-end;
+    justify-self: flex-end;
+}
