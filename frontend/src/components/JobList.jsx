@@ -1,4 +1,3 @@
-// JobList.js
 import React, { useState } from 'react';
 import JobCard from './JobCard';
 import './jobList.css';

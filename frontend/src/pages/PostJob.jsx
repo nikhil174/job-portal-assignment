@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './signin.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { login } from '../store/userReducer';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import Config from '../config';
 
 const PostJob = () => {
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ const PostJob = () => {
                 organization,
                 stack: stack.split(',').map(item => item.trim()), 
             }
-            await axios.post('http://localhost:5000/jobs', data, {
+            await axios.post(`${Config.ip}jobs`, data, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }

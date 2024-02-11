@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { addAppliedJob } from '../store/userReducer';
 import { convertToIST } from '../utils/helpers';
+import Config from '../config';
 
 function JobDescription({ job }) {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function JobDescription({ job }) {
       } 
 
       try {
-        await axios.post(`http://localhost:5000/jobs/${id}/apply`, {}, {
+        await axios.post(`${Config.ip}jobs/${id}/apply`, {}, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }

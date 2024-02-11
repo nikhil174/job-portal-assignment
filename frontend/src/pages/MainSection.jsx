@@ -6,6 +6,7 @@ import axios from 'axios';
 import Header from '../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../store/userReducer';
+import Config from '../config';
 
 const MainSection = () => {
     const accessToken = useSelector((state) => state.user.accessToken);
@@ -18,7 +19,7 @@ const MainSection = () => {
         // Replace this with your API endpoint to fetch jobs
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/jobs/');
+                const response = await axios.get(`${Config.ip}jobs/`);
                 setJobs(response.data);
             } catch (error) {
                 console.log(error);
@@ -31,7 +32,7 @@ const MainSection = () => {
             if (accessToken) {
                 const fetchUserData = async () => {
                     try {
-                        const response = await axios.get('http://localhost:5000/users/aboutme', {
+                        const response = await axios.get(`${Config.ip}users/aboutme`, {
                             headers: {
                                 'Authorization': `Bearer ${accessToken}`
                             }
@@ -58,7 +59,7 @@ const MainSection = () => {
             let data = JSON.stringify({
                 [key]: value
             });
-            const response = await axios.post('http://localhost:5000/jobs/search', data, {
+            const response = await axios.post(`${Config.ip}jobs/search`, data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

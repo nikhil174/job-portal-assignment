@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import Config from '../config';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -16,12 +17,12 @@ const SignIn = () => {
     const handleSignIn = async (e) => {
         e.preventDefault();
         try {
-            let response = await axios.post('http://localhost:5000/auth/signin', {
+            let response = await axios.post(`${Config.ip}auth/signin`, {
                 email,
                 password
             });
             const { access_token : accessToken } = response.data;
-            response = await axios.get('http://localhost:5000/users/aboutme', {
+            response = await axios.get(`${Config.ip}users/aboutme`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }

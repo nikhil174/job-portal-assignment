@@ -5,6 +5,7 @@ import axios from 'axios';
 import { login } from '../store/userReducer';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import Config from '../config';
 
 const Signup = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            let response = await axios.post('http://localhost:5000/auth/signup', {
+            let response = await axios.post(`${Config.ip}auth/signup`, {
                 name,
                 email,
                 password,
