@@ -24,11 +24,30 @@ export class JobsService {
   }
 
   async findAll(): Promise<Job[]> {
-    return this.databaseService.job.findMany();
+    return this.databaseService.job.findMany({
+      include: {
+        postedBy: {
+          select: {
+            email: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number): Promise<Job | null> {
-    return this.databaseService.job.findUnique({ where: { id } });
+    return this.databaseService.job.findUnique({
+      where: { id },
+      include: {
+        postedBy: {
+          select: {
+            email: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async apply(user: User, jobId: number): Promise<Job> {
