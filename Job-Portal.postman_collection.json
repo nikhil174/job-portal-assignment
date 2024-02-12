@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "97fccd0d-5403-4fad-9f5f-0c93ecad971a",
+		"name": "Job-Portal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Ashok Tiwari\",\n    \"email\": \"ashok@gmail.com\",\n    \"password\": \"password\",\n    \"role\": \"CANDIDATE\",\n    \"about\" : \"Fresher\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"priya@gmail.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "about me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoicHJpeWFAZ21haWwuY29tIiwiaWF0IjoxNzA3Njc4NjA5LCJleHAiOjE3MDc2ODk0MDl9.aQ9JxZ6AN1uHF1lrXbHMAI-5Rd3y4d11DPEW_NIaagg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/users/aboutme",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"aboutme"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoicHJpeWFAZ21haWwuY29tIiwiaWF0IjoxNzA3Njc4NjA5LCJleHAiOjE3MDc2ODk0MDl9.aQ9JxZ6AN1uHF1lrXbHMAI-5Rd3y4d11DPEW_NIaagg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/users/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "create Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoicHJpeWFAZ21haWwuY29tIiwiaWF0IjoxNzA3NjM2NTkxLCJleHAiOjE3MDc2NDczOTF9.eL0pGIIkaoeOSR5wdD2aqMRt0Q5kPMVE_J9xMCN_IH4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"SDE2\",\n    \"description\": \"Frontend Developer\",\n    \"organization\": \"Test Org 2\",\n    \"stack\": [\"reactjs\", \"Javascript\", \"nextjs\", \"sytem design\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "apply to job Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoidGhlcm9ja0BnbWFpbC5jb20iLCJpYXQiOjE3MDc2MDQ3NDIsImV4cCI6MTcwNzYxNTU0Mn0.xYOjKrtOReL2MhzvkU_KTTHj3ZXtv7w7cl7PjxDYtfo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs/1/applicants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								"1",
+								"applicants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get jobs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoidGhlcm9ja0BnbWFpbC5jb20iLCJpYXQiOjE3MDc2MDQ3NDIsImV4cCI6MTcwNzYxNTU0Mn0.xYOjKrtOReL2MhzvkU_KTTHj3ZXtv7w7cl7PjxDYtfo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"SDE1\",\n    \"description\": \"frontend developer\",\n    \"organization\": \"testOrg\",\n    \"stack\": [\"reactjs\", \"nextjs\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a job",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoidGhlcm9ja0BnbWFpbC5jb20iLCJpYXQiOjE3MDc2MDQ3NDIsImV4cCI6MTcwNzYxNTU0Mn0.xYOjKrtOReL2MhzvkU_KTTHj3ZXtv7w7cl7PjxDYtfo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"SDE1\",\n    \"description\": \"frontend developer\",\n    \"organization\": \"testOrg\",\n    \"stack\": [\"reactjs\", \"nextjs\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "apply to job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoiYXNob2tAZ21haWwuY29tIiwiaWF0IjoxNzA3NjM3MDIxLCJleHAiOjE3MDc2NDc4MjF9.O5B48_5-JEMnFtIv6c9MXThWupsBs2X9fBcXl_t6Mdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs/5/apply",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								"5",
+								"apply"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search jobs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoidGhlcm9ja0BnbWFpbC5jb20iLCJpYXQiOjE3MDc2MDQ3NDIsImV4cCI6MTcwNzYxNTU0Mn0.xYOjKrtOReL2MhzvkU_KTTHj3ZXtv7w7cl7PjxDYtfo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"sd\",\n    \"description\" : \"front\",\n    \"name\": \"the rock\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								"search"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "de",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "the rock",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get applied jobs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImVtYWlsIjoiYXNob2tAZ21haWwuY29tIiwiaWF0IjoxNzA3NjM3MDIxLCJleHAiOjE3MDc2NDc4MjF9.O5B48_5-JEMnFtIv6c9MXThWupsBs2X9fBcXl_t6Mdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jobs/applied",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								"applied"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "previously applied candidates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoicHJpeWFAZ21haWwuY29tIiwiaWF0IjoxNzA3Njc4NjA5LCJleHAiOjE3MDc2ODk0MDl9.aQ9JxZ6AN1uHF1lrXbHMAI-5Rd3y4d11DPEW_NIaagg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/jobs/candidates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jobs",
+								"candidates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
