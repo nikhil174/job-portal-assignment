@@ -1,5 +1,5 @@
 const Config = {
-    ip : 'http://localhost:5000/'
+    ip : 'https://jobify-d41l.onrender.com'
 }
 
 export default Config;
