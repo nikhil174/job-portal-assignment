@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import './jobDescription.css'
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,33 +16,31 @@ function JobDescription({ job }) {
   const applied = appliedJobs.length && job ? appliedJobs.includes(job.id) : false;
   const [loading, setLoading] = useState(false);
 
-  const handleApply = useMemo(() => {
-    return async (id) => {
-      if (!accessToken) {
-        toast.error('You must be logged in');
-        return;
-      } else if (role !== 'CANDIDATE') {
-        toast.error('Only candidates can apply');
-        return;
-      }
-
-      setLoading(true);
-      try {
-        await axios.post(`${Config.ip}jobs/${id}/apply`, {}, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        });
-        dispatch(addAppliedJob(id));
-        setLoading(false);
-        toast.success('Applied to Job successfully');
-      } catch (error) {
-        setLoading(false);
-        toast.error('Failed to apply to job');
-        console.log(error);
-      }
+  const handleApply = useCallback(async (id) => {
+    if (!accessToken) {
+      toast.error('You must be logged in');
+      return;
+    } else if (role !== 'CANDIDATE') {
+      toast.error('Only candidates can apply');
+      return;
     }
-  }, []);
+
+    setLoading(true);
+    try {
+      await axios.post(`${Config.ip}jobs/${id}/apply`, {}, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      dispatch(addAppliedJob(id));
+      setLoading(false);
+      toast.success('Applied to Job successfully');
+    } catch (error) {
+      setLoading(false);
+      toast.error('Failed to apply to job');
+      console.log(error);
+    }
+  }, [accessToken, role, dispatch]);
 
   return (
     <div className='job-description'>

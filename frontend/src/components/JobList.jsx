@@ -18,7 +18,7 @@ const JobList = ({ jobs, handleJobSelect, handleSearch, fetchJobData }) => {
   };
 
   const onSearch = async () => {
-    if (searchKeyword.trim().length == 0) {
+    if (searchKeyword.trim().length === 0) {
       toast.error('Enter a search value'); 
       return;
     }

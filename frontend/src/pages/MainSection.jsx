@@ -53,10 +53,10 @@ const MainSection = () => {
         }
     }, []);
 
-    const handleJobSelect = jobId => {
+    const handleJobSelect = useCallback(jobId => {
         const job = jobs.find(j => j.id === jobId);
         setSelectedJobDetail(job);
-    };
+    }, [jobs]);
 
     const handleJobSearch = useCallback(async (key, value) => {
         try {
@@ -77,11 +77,11 @@ const MainSection = () => {
 
     return (
         <>
-        <Header />
-        <div className="jobs_container">
-            <JobList jobs={jobs} handleJobSelect={handleJobSelect} handleSearch={handleJobSearch} fetchJobData={fetchJobData} />
-            <JobDescription job={selectedJobDetail} handleJobSelect={handleJobSelect} />
-        </div>
+            <Header />
+            <div className="jobs_container">
+                <JobList jobs={jobs} handleJobSelect={handleJobSelect} handleSearch={handleJobSearch} fetchJobData={fetchJobData} />
+                <JobDescription job={selectedJobDetail} handleJobSelect={handleJobSelect} />
+            </div>
         </>
     );
 };
