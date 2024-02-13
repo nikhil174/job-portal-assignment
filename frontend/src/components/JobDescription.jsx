@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import './jobDescription.css'
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,7 @@ function JobDescription({ job }) {
   const appliedJobs = useSelector((state) => state.user.appliedJobs);
   const role = useSelector((state) => state.user.role);
   const applied = appliedJobs.length && job ? appliedJobs.includes(job.id) : false;
+  const [loading, setLoading] = useState(false);
 
   const handleApply = useMemo(() => {
     return async (id) => {
@@ -23,8 +24,9 @@ function JobDescription({ job }) {
       } else if (role !== 'CANDIDATE') {
         toast.error('Only candidates can apply');
         return;
-      } 
+      }
 
+      setLoading(true);
       try {
         await axios.post(`${Config.ip}jobs/${id}/apply`, {}, {
           headers: {
@@ -32,8 +34,10 @@ function JobDescription({ job }) {
           }
         });
         dispatch(addAppliedJob(id));
+        setLoading(false);
         toast.success('Applied to Job successfully');
       } catch (error) {
+        setLoading(false);
         toast.error('Failed to apply to job');
         console.log(error);
       }
@@ -67,11 +71,16 @@ function JobDescription({ job }) {
               <div className='applybtn_container'>
                 <button
                   id="applybtn"
-                  className={applied ? "disabledbtn" : ""}
+                  className={applied || loading ? "disabledbtn" : ""}
                   disabled={applied}
                   onClick={() => handleApply(job.id)}
                 >
-                  {applied ? "Applied" : "Apply"}
+                  {loading ?
+                    (<span className="material-symbols-outlined rotate" id="searchIcon">
+                      progress_activity
+                    </span>) :
+                    applied ? "Applied" : "Apply"
+                  }
                 </button>
               </div>
             </div>

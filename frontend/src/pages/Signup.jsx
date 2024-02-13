@@ -15,9 +15,11 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('CANDIDATE'); // Default role is 'CANDIDATE'
     const [about, setAbout] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSignup = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             let response = await axios.post(`${Config.ip}auth/signup`, {
                 name,
@@ -26,17 +28,19 @@ const Signup = () => {
                 role,
                 about
             });
-            const { access_token : accessToken } = response.data;
+            const { access_token: accessToken } = response.data;
             const appliedJobs = [];
             const postedJobs = [];
             // Dispatch action to store access token in Redux
             dispatch(login({ accessToken, name, role, appliedJobs, postedJobs }));
             // Store access token in local storage
             localStorage.setItem('jobify_token', accessToken);
+            setLoading(false);
             toast.success('Signed up Successfully.');
             // Redirect to home page
             navigate('/');
         } catch (error) {
+            setLoading(false);
             toast.error('Signup failed. Please check your credentials.');
             console.error('Signup failed:', error.message);
         }
@@ -70,12 +74,23 @@ const Signup = () => {
                     <textarea placeholder="About" value={about} onChange={e => setAbout(e.target.value)} />
                 </div>
                 <div className="form-item">
-                    <button type="submit">Sign Up</button>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`${loading ? "disabledBtn" : ""}`}
+                    >
+                        {loading ?
+                            (<span className="material-symbols-outlined rotate" id="searchIcon">
+                                progress_activity
+                            </span>) :
+                            ("Sign Up")
+                        }
+                    </button>
                 </div>
             </form>
             <p className="sigup_link">Already have an account? <Link to="/login">Login</Link></p>
         </div>
-    ); 
+    );
 };
 
 export default Signup;

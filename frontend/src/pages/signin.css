@@ -72,3 +72,9 @@ button:hover {
 .signup_link {
     text-align: center;
 }
+
+.disabledBtn {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+}

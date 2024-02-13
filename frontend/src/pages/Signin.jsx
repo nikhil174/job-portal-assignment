@@ -13,15 +13,17 @@ const SignIn = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSignIn = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             let response = await axios.post(`${Config.ip}auth/signin`, {
                 email,
                 password
             });
-            const { access_token : accessToken } = response.data;
+            const { access_token: accessToken } = response.data;
             response = await axios.get(`${Config.ip}users/aboutme`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
@@ -32,10 +34,12 @@ const SignIn = () => {
             dispatch(login({ accessToken, name, role, appliedJobs, postedJobs }));
             // Store access token in local storage
             localStorage.setItem('jobify_token', accessToken);
+            setLoading(false);
             toast.success('Logged in Successfully.');
             // Redirect to home page
             navigate('/');
         } catch (error) {
+            setLoading(false);
             toast.error('Login failed. Please check your credentials.');
             console.error('Login failed:', error.message);
         }
@@ -54,7 +58,18 @@ const SignIn = () => {
                     <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                 </div>
                 <div className="form-item">
-                    <button type="submit">Log In</button>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`${loading ? "disabledBtn" : ""}`}
+                    >
+                        {loading ?
+                            (<span className="material-symbols-outlined rotate" id="searchIcon">
+                                progress_activity
+                            </span>) :
+                            ("Log In")
+                        }
+                    </button>
                 </div>
             </form>
             <p className="sigup_link">New user? <Link to="/signup">Sign up</Link></p>

@@ -3,10 +3,11 @@
     flex-direction: column;
     width: 400px;
 }
+
 .job-list {
     height: 100%;
-    overflow-y: auto; 
-    padding: 20px; 
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .search-container {
@@ -22,9 +23,11 @@
     height: 40px;
     padding: 5px;
 }
+
 .search-container select {
     width: 50px;
 }
+
 .search-container button {
     width: 50px;
 }
@@ -51,4 +54,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.disabledBtn {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.rotate {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

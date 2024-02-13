@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import JobCard from './JobCard';
 import './jobList.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const JobList = ({ jobs, handleJobSelect, handleSearch }) => {
+const JobList = ({ jobs, handleJobSelect, handleSearch, fetchJobData }) => {
   const [searchCriteria, setSearchCriteria] = useState('title');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSearchCriteriaChange = e => {
     setSearchCriteria(e.target.value);
@@ -14,8 +17,14 @@ const JobList = ({ jobs, handleJobSelect, handleSearch }) => {
     setSearchKeyword(e.target.value);
   };
 
-  const onSearch = () => {
-    handleSearch(searchCriteria, searchKeyword);
+  const onSearch = async () => {
+    if (searchKeyword.trim().length == 0) {
+      toast.error('Enter a search value'); 
+      return;
+    }
+    setLoading(true);
+    await handleSearch(searchCriteria, searchKeyword);
+    setLoading(false);
   }
 
   return (
@@ -35,14 +44,27 @@ const JobList = ({ jobs, handleJobSelect, handleSearch }) => {
         <button
           id="searchBtn"
           onClick={onSearch}
+          disabled={loading}
+          className={`${loading ? "disabledBtn" : ""}`}
         >
-          <span className="material-symbols-outlined" id="searchIcon">
-            search
-          </span>
+          {loading ?
+            (<span className="material-symbols-outlined rotate" id="searchIcon">
+              progress_activity
+            </span>) :
+            (<span className="material-symbols-outlined" id="searchIcon">
+              search
+            </span>)
+          }
         </button>
       </div>
       <div className='job-list'>
-        {jobs.length === 0 ? (
+        {fetchJobData && <div id="not_found_jobs">
+          <span className="material-symbols-outlined rotate" id="searchIcon">
+            progress_activity
+          </span>
+        </div>
+        }
+        {!fetchJobData && jobs.length === 0 ? (
           <div id="not_found_jobs">No Jobs Found</div>
         ) : (
           jobs.map(job => (

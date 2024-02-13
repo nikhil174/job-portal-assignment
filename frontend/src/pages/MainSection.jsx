@@ -13,15 +13,19 @@ const MainSection = () => {
     const dispatch = useDispatch();
     const [jobs, setJobs] = useState([]);
     const [selectedJobDetail, setSelectedJobDetail] = useState(null);
+    const [fetchJobData, setFetchJobData] = useState(false);
 
     useEffect(() => {
         // Fetch jobs data from an API
         // Replace this with your API endpoint to fetch jobs
         const fetchData = async () => {
+            setFetchJobData(true);
             try {
                 const response = await axios.get(`${Config.ip}jobs/`);
+                setFetchJobData(false);
                 setJobs(response.data);
             } catch (error) {
+                setFetchJobData(false);
                 console.log(error);
                 setJobs([]);
             }
@@ -75,7 +79,7 @@ const MainSection = () => {
         <>
         <Header />
         <div className="jobs_container">
-            <JobList jobs={jobs} handleJobSelect={handleJobSelect} handleSearch={handleJobSearch} />
+            <JobList jobs={jobs} handleJobSelect={handleJobSelect} handleSearch={handleJobSearch} fetchJobData={fetchJobData} />
             <JobDescription job={selectedJobDetail} handleJobSelect={handleJobSelect} />
         </div>
         </>

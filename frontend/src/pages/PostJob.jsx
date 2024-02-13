@@ -12,22 +12,24 @@ const PostJob = () => {
     const [description, setDescription] = useState('');
     const [organization, setOrganization] = useState('');
     const [stack, setStack] = useState('');
+    const [loading, setLoading] = useState(false);
     const accessToken = useSelector((state) => state.user.accessToken);
     const role = useSelector((state) => state.user.role);
-    
+
     const handleSignup = async (e) => {
         e.preventDefault();
         if (role !== 'RECRUITER') {
             toast.error('Only recruiters can post jobs');
             navigate('/');
+            return;
         }
-
+        setLoading(true);
         try {
             const data = {
                 title,
                 description,
                 organization,
-                stack: stack.split(',').map(item => item.trim()), 
+                stack: stack.split(',').map(item => item.trim()),
             }
             await axios.post(`${Config.ip}jobs`, data, {
                 headers: {
@@ -35,8 +37,10 @@ const PostJob = () => {
                 }
             });
             toast.success('Job created successfully!');
+            setLoading(false);
             navigate('/')
         } catch (error) {
+            setLoading(false);
             if (error.response && error.response.data) {
                 toast.error(error.response.data.message);
             } else {
@@ -66,12 +70,23 @@ const PostJob = () => {
                     <input type="text" placeholder="Stack (comma-separated)" value={stack} onChange={e => setStack(e.target.value)} required />
                 </div>
                 <div className="form-item">
-                    <button type="submit">Post Job</button>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`${loading ? "disabledBtn" : ""}`}
+                    >
+                        {loading ?
+                            (<span className="material-symbols-outlined rotate" id="searchIcon">
+                                progress_activity
+                            </span>) :
+                            ("Post Job")
+                        }
+                    </button>
                 </div>
             </form>
-            <p className="signup_link">Back to <Link to="/jobs">Jobs</Link></p>
+            <p className="signup_link">Back to <Link to="/">Jobs</Link></p>
         </div>
-    ); 
+    );
 };
 
 export default PostJob;
